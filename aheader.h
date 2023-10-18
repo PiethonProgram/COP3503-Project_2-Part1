@@ -15,7 +15,7 @@ class Tga {
             short colorMapOrigin;
             short colorMapLength;
             char colorMapDepth;
-            short xorigin;
+            short xOrigin;
             short yOrigin;
             short width;
             short height;
@@ -23,7 +23,7 @@ class Tga {
             char imageDescriptor;
         };
         Tga();
-        Tga(string);
+        Tga(string file);
         ~Tga();
 
     private:
