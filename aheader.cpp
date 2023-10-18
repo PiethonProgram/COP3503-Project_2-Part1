@@ -31,20 +31,20 @@ Tga::Tga(string file){
         vector<unsigned char> colors;
         for (int i=0;i<pickcellCount;i++){
             for (int j=0;j<3;j++){
-
+                unsigned char dolores;
+                infile.read(reinterpret_cast<char*>(&dolores),1);
+                colors.push_back(dolores);
             }
+            pickcells.push_back((colors));
         }
-
+        infile.close();
     }
     else{
         cout<<"File does not exist"<<endl;
     }
-
-
-
-
 }
 
 Tga::~Tga(){
     ;
 }
+

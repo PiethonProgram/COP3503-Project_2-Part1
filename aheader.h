@@ -1,4 +1,3 @@
-
 #pragma once
 #include <iostream>
 #include <vector>
@@ -25,6 +24,19 @@ class Tga {
         Tga();
         Tga(string file);
         ~Tga();
+
+        Header getHeader();
+        vector<vector<unsigned char>> getPixelShallow();
+        vector<vector<unsigned char>>* getPixelDeep();
+        int getPixelCount();
+
+        void setHeader(Header);
+        void setPixelCount(int);
+
+        void writeTga(string name);
+        void writeChannel(string name, string channel);
+
+
 
     private:
         Header h;
