@@ -48,3 +48,106 @@ Tga::~Tga(){
     ;
 }
 
+Tga::Header Tga::getHeader() {
+    return this->h;
+}
+
+vector<vector<unsigned char>> Tga::getPixelShallow() {
+    return this->pickcells;
+}
+
+vector<vector<unsigned char>>* Tga::getPixelDeep() {
+    return &this->pickcells;
+}
+
+int Tga::getPixelCount() {
+    return this->pickcellCount;
+}
+
+void Tga::setHeader(Tga::Header setter) {
+    this->h = setter;
+}
+
+void Tga::setPixelCount(int count) {
+    this->pickcellCount=count;
+}
+
+void Tga::writeTga(string name) {
+    fstream outfile(name, ios_base::out | ios_base::binary);
+    if (outfile.is_open()){
+        outfile.write(&this->h.idLength, 1);
+        outfile.write(&this->h.colorMapType, 1);
+        outfile.write(&this->h.dataCodetype, 1);
+        outfile.write(reinterpret_cast<char*>(&this->h.colorMapOrigin), 2);
+        outfile.write(reinterpret_cast<char*>(&this->h.colorMapLength), 2);
+        outfile.write(&this->h.colorMapDepth, 1);
+        outfile.write(reinterpret_cast<char*>(&this->h.xOrigin), 2);
+        outfile.write(reinterpret_cast<char*>(&this->h.yOrigin), 2);
+        outfile.write(reinterpret_cast<char*>(&this->h.width), 2);
+        outfile.write(reinterpret_cast<char*>(&this->h.height), 2);
+        outfile.write(&this->h.bitsPerPixel, 1);
+        outfile.write(&this->h.imageDescriptor, 1);
+        for (int i=0; i< this-> pickcellCount;i++){
+            for (int j=0;j<3;j++){
+                outfile.write(reinterpret_cast<char*>(&this->pickcells[i][j]),1);
+            }
+        }
+    }
+    else{
+        cout<<"File isn't open"<<endl;
+    }
+}
+
+void Tga::writeChannel(string name, string channel) {
+    fstream outfile(name, ios_base::out | ios_base::binary);
+    if(outfile.is_open()){
+        outfile.write(&this->h.idLength, 1);
+        outfile.write(&this->h.colorMapType, 1);
+        outfile.write(&this->h.dataCodetype, 1);
+        outfile.write(reinterpret_cast<char*>(&this->h.colorMapOrigin), 2);
+        outfile.write(reinterpret_cast<char*>(&this->h.colorMapLength), 2);
+        outfile.write(&this->h.colorMapDepth, 1);
+        outfile.write(reinterpret_cast<char*>(&this->h.xOrigin), 2);
+        outfile.write(reinterpret_cast<char*>(&this->h.yOrigin), 2);
+        outfile.write(reinterpret_cast<char*>(&this->h.width), 2);
+        outfile.write(reinterpret_cast<char*>(&this->h.height), 2);
+        outfile.write(&this->h.bitsPerPixel, 1);
+        outfile.write(&this->h.imageDescriptor, 1);
+
+        if (channel=="blue"){
+            for (int i=0;i<this->pickcellCount;i++){
+                for (int j=0;j<3;j++){
+                    outfile.write(reinterpret_cast<char*>(&this->pickcells[i][0]), 1);
+                }
+            }
+        }
+        if (channel=="green"){
+            for (int i=0;i<this->pickcellCount;i++){
+                for (int j=0;j<3;j++){
+                    outfile.write(reinterpret_cast<char*>(&this->pickcells[i][1]), 1);
+                }
+            }
+        }
+        if (channel == "red"){
+            for (int i=0;i<this->pickcellCount;i++){
+                for (int j=0;j<3;j++){
+                    outfile.write(reinterpret_cast<char*>(&this->pickcells[i][2]), 1);
+                }
+            }
+        }
+    }
+    else{
+        cout<<"File isn't open"<<endl;
+    }
+}
+
+//separate between functions for the two classes
+
+Manipulator::Manipulator() {
+    ;
+}
+
+Manipulator::~Manipulator(){
+    ;
+}
+

@@ -47,3 +47,19 @@ class Tga {
 
 
 };
+
+class Manipulator{
+    Manipulator();
+    ~Manipulator();
+
+    Tga multiply(Tga Uno, Tga Dos);
+    Tga screen(Tga Uno, Tga Dos);
+    Tga subtract(Tga Uno, Tga Dos);
+    Tga add(Tga Uno, Tga Dos);
+    Tga overlay(Tga Uno, Tga Dos);
+    Tga combineIndividual();
+    Tga multiplyChannel();
+    Tga addChannel();
+    Tga flip();
+    Tga singleChannel();
+};
