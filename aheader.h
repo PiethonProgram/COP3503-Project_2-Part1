@@ -49,6 +49,7 @@ class Tga {
 };
 
 class Manipulator{
+public:
     Manipulator();
     ~Manipulator();
 
@@ -57,9 +58,9 @@ class Manipulator{
     Tga subtract(Tga Uno, Tga Dos);
     Tga add(Tga Uno, Tga Dos);
     Tga overlay(Tga Uno, Tga Dos);
-    Tga combineIndividual();
-    Tga multiplyChannel();
-    Tga addChannel();
-    Tga flip();
-    Tga singleChannel();
+    Tga combineIndividual(Tga Uno, Tga Dos, string channel);
+    Tga multiplyChannel(Tga Uno, string channel, float scale);
+    Tga addChannel(Tga Uno, string channel, int amount);
+    Tga flip(Tga Uno);
+    Tga singleChannel(Tga Uno, string channel);
 };
