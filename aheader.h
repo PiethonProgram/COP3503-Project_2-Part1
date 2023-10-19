@@ -5,6 +5,7 @@
 #include <fstream>
 using namespace std;
 
+//honestly, I just followed the pdf
 class Tga {
     public:
         struct Header {
@@ -48,6 +49,7 @@ class Tga {
 
 };
 
+//class called manipulators since it manipulates things and no one likes dealing with manipulators
 class Manipulator{
 public:
     Manipulator();

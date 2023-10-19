@@ -151,3 +151,42 @@ Manipulator::~Manipulator(){
     ;
 }
 
+Tga Manipulator::multiply(Tga Uno, Tga Dos) {
+
+}
+
+Tga Manipulator::screen(Tga Uno, Tga Dos) {
+
+}
+
+Tga Manipulator::subtract(Tga Uno, Tga Dos) {
+
+}
+
+Tga Manipulator::add(Tga Uno, Tga Dos) {
+
+}
+
+Tga Manipulator::overlay(Tga Uno, Tga Dos) {
+
+}
+
+Tga Manipulator::combineIndividual(Tga Uno, Tga Dos, std::string channel) {
+
+}
+
+Tga Manipulator::multiplyChannel(Tga Uno, std::string channel, float scale) {
+
+}
+
+Tga Manipulator::addChannel(Tga Uno, std::string channel, int amount) {
+
+}
+
+Tga Manipulator::flip(Tga Uno) {
+
+}
+
+Tga Manipulator::singleChannel(Tga Uno, std::string channel) {
+
+}
