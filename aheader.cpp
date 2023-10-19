@@ -152,7 +152,21 @@ Manipulator::~Manipulator(){
 }
 
 Tga Manipulator::multiply(Tga Uno, Tga Dos) {
-
+    Tga Rizz;
+    vector<vector<unsigned char>> temu1 = Uno.getPixelShallow();
+    vector<vector<unsigned char>> temu2 = Dos.getPixelShallow();
+    Rizz.setHeader(Uno.getHeader());
+    Rizz.setPixelCount(Uno.getPixelCount());
+    for (int i=0;i<Rizz.getPixelCount();i++){
+        vector<unsigned char> dolores(3, 0);
+        for (int j=0;j<3;j++){
+            float color=(static_cast<float>(temu1[i][j]) / 255.0f) * (static_cast<float>(temu2[i][j]) / 255.0f);
+            color=(color*255.0f)+0.5f;
+            dolores[j] = static_cast<unsigned char>(color);
+        }
+        Rizz.getPixelDeep()->push_back(dolores);
+    }
+    return (Rizz);
 }
 
 Tga Manipulator::screen(Tga Uno, Tga Dos) {
