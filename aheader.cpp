@@ -170,30 +170,123 @@ Tga Manipulator::multiply(Tga Uno, Tga Dos) {
 }
 
 Tga Manipulator::screen(Tga Uno, Tga Dos) {
-
+    Tga Florida;
+    vector<vector<unsigned char>> Flo = Uno.getPixelShallow();
+    vector<vector<unsigned char>> Rida = Dos.getPixelShallow();
+    Florida.setHeader(Uno.getHeader());
+    Florida.setPixelCount(Uno.getPixelCount());
+    for (int i=0; i<Florida.getPixelCount();i++){
+        vector<unsigned char> surf(3, 0);
+        for (int j=0;j<3;j++){
+            float board = (1-(Flo[i][j]/255.0f)) * (1-(Rida[i][j]/255.0f));
+            board=(1-board)*255.0f+0.5f;
+            surf[j] = static_cast<unsigned char>(board);
+        }
+        Florida.getPixelDeep()->push_back(surf);
+    }
+    return (Florida);
 }
 
 Tga Manipulator::subtract(Tga Uno, Tga Dos) {
-
+    Tga Cheese;
+    vector<vector<unsigned char>> Mozzarella = Uno.getPixelShallow();
+    vector<vector<unsigned char>> Provolone = Dos.getPixelShallow();
+    Cheese.setHeader(Uno.getHeader());
+    Cheese.setPixelCount(Uno.getPixelCount());
+    for (int i=0;i<Cheese.getPixelCount();i++){
+        vector<unsigned char> cheddar(3,0);
+        for (int j=0;j<3;j++){
+            int feta = int(Mozzarella[i][j]) - int(Provolone[i][j]);
+            if (feta<0){
+                feta=0;
+            }
+            feta=static_cast<unsigned char>(feta);
+            cheddar.push_back(feta);
+        }
+        Cheese.getPixelDeep()->push_back(cheddar);
+    }
+    return (Cheese);
 }
 
 Tga Manipulator::add(Tga Uno, Tga Dos) {
-
+    Tga Cheese;
+    vector<vector<unsigned char>> Mozzarella = Uno.getPixelShallow();
+    vector<vector<unsigned char>> Provolone = Dos.getPixelShallow();
+    Cheese.setHeader(Uno.getHeader());
+    Cheese.setPixelCount(Uno.getPixelCount());
+    for (int i=0;i<Cheese.getPixelCount();i++){
+        vector<unsigned char> cheddar(3,0);
+        for (int j=0;j<3;j++){
+            int feta = int(Mozzarella[i][j]) + int(Provolone[i][j]);
+            if (feta>255){
+                feta=255;
+            }
+            feta=static_cast<unsigned char>(feta);
+            cheddar.push_back(feta);
+        }
+        Cheese.getPixelDeep()->push_back(cheddar);
+    }
+    return (Cheese);
 }
 
 Tga Manipulator::overlay(Tga Uno, Tga Dos) {
+    Tga FF;
+    vector<vector<unsigned char>> hamburger = Uno.getPixelShallow();
+    vector<vector<unsigned char>> hotdog = Dos.getPixelShallow();
+    FF.setHeader(Uno.getHeader());
+    FF.setPixelCount(Uno.getPixelCount());
+    for(int i=0; i<FF.getPixelCount(); i++){
+        vector<unsigned char>condiment(3,0);
+        for(int j=0; j<3; j++){
+            float color;
+            if(hotdog[i][j]/255.0f <= 0.5){
+                color = 2.0f*(hamburger[i][j]/255.0f) * (hotdog[i][j]/255.0f);
+                color = (color*255.0f)+0.5f;
+            }
+            else{
+                color = 2.0f*(1-(hamburger[i][j]/255.0f)) * (1-(hotdog[i][j]/255.0f));
+                color = (1 - color)*255.0f+0.5f;
+            }
+            color = static_cast<unsigned char>(color);
+            condiment.push_back(color);
+        }
+        FF.getPixelDeep()->push_back(condiment);
+    }
+    return (FF);
+}
+
+Tga Manipulator::combineIndividual(Tga Uno, Tga Dos, string channel) {
+    Tga Kitchen;
+    vector<vector<unsigned char>> Fridge = Uno.getPixelShallow();
+    vector<vector<unsigned char>> Microwave = Dos.getPixelShallow();
+    Kitchen.setHeader(Uno.getHeader());
+    Kitchen.setPixelCount(Uno.getPixelCount());
+    if (channel=="blue"){
+        for (int i=0;i<Kitchen.getPixelCount();i++){
+            Fridge[i][0]=Microwave[i][0];
+            Kitchen.getPixelDeep()->push_back(Fridge[i]);
+        }
+    }
+    if (channel=="green"){
+        for (int i=0;i<Kitchen.getPixelCount();i++){
+            Fridge[i][1]=Microwave[i][1];
+            Kitchen.getPixelDeep()->push_back(Fridge[i]);
+        }
+    }
+    if (channel=="red"){
+        for (int i=0;i<Kitchen.getPixelCount();i++){
+            Fridge[i][2]=Microwave[i][2];
+            Kitchen.getPixelDeep()->push_back(Fridge[i]);
+        }
+    }
+    return (Kitchen);
+}
+
+Tga Manipulator::multiplyChannel(Tga Uno, string channel, float scale) {
 
 }
 
-Tga Manipulator::combineIndividual(Tga Uno, Tga Dos, std::string channel) {
-
-}
-
-Tga Manipulator::multiplyChannel(Tga Uno, std::string channel, float scale) {
-
-}
-
-Tga Manipulator::addChannel(Tga Uno, std::string channel, int amount) {
+Tga Manipulator::addChannel(Tga Uno, string channel, int amount) {
 
 }
 
@@ -201,6 +294,6 @@ Tga Manipulator::flip(Tga Uno) {
 
 }
 
-Tga Manipulator::singleChannel(Tga Uno, std::string channel) {
+Tga Manipulator::singleChannel(Tga Uno, string channel) {
 
 }
