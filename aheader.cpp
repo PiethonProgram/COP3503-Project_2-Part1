@@ -313,7 +313,29 @@ Tga Manipulator::multiplyChannel(Tga Uno, string channel, float scale) {
 }
 
 Tga Manipulator::addChannel(Tga Uno, string channel, int amount) {
-
+    Tga Sports;
+    vector<vector<unsigned char>> Reverse = Uno.getPixelShallow();
+    Sports.setHeader(Uno.getHeader());
+    Sports.setPixelCount(Uno.getPixelCount());
+    int yoga=NULL;
+    if (channel=="blue"){
+        yoga=0;
+    }
+    if (channel=="green"){
+        yoga=1;
+    }
+    if (channel=="red"){
+        yoga=2;
+    }
+    for (int i=0; i<Sports.getPixelCount();i++){
+        int color;
+        color = Reverse[i][yoga]+amount;
+        color = (color>255) ? 255: color;
+        color=static_cast<unsigned char>(color);
+        Reverse[i][yoga]=color;
+        Sports.getPixelDeep()->push_back(Reverse[i]);
+    }
+    return (Sports);
 }
 
 Tga Manipulator::flip(Tga Uno) {
@@ -328,5 +350,31 @@ Tga Manipulator::flip(Tga Uno) {
 }
 
 Tga Manipulator::singleChannel(Tga Uno, string channel) {
-
+    Tga Jungle;
+    vector<vector<unsigned char>> Jagz = Uno.getPixelShallow();
+    Jungle.setHeader(Uno.getHeader());
+    Jungle.setPixelCount(Uno.getPixelCount());
+    int trees=NULL;
+    if (channel=="blue"){
+        for (int i=0; i< Jungle.getPixelCount();i++){
+            Jagz[i][1]=0;
+            Jagz[i][2]=0;
+            Jungle.getPixelDeep()->push_back(Jagz[i]);
+        }
+    }
+    if (channel=="green"){
+        for (int i=0; i< Jungle.getPixelCount();i++){
+            Jagz[i][0]=0;
+            Jagz[i][2]=0;
+            Jungle.getPixelDeep()->push_back(Jagz[i]);
+        }
+    }
+    if (channel=="red") {
+        for (int i=0; i< Jungle.getPixelCount();i++){
+            Jagz[i][0]=0;
+            Jagz[i][1]=0;
+            Jungle.getPixelDeep()->push_back(Jagz[i]);
+        }
+    }
+    return Jungle;
 }
