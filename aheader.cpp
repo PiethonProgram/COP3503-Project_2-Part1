@@ -283,7 +283,33 @@ Tga Manipulator::combineIndividual(Tga Uno, Tga Dos, string channel) {
 }
 
 Tga Manipulator::multiplyChannel(Tga Uno, string channel, float scale) {
-
+    Tga Gru;
+    vector<vector<unsigned char>> Minion = Uno.getPixelShallow();
+    Gru.setHeader(Uno.getHeader());
+    Gru.setPixelCount(Uno.getPixelCount());
+    for (int i=0;i<Gru.getPixelCount();i++){
+        float Nefario;
+        int Bob=NULL;
+        if (channel=="blue"){
+            Bob=0;
+            Nefario=Minion[i][0]*scale;
+        }
+        if (channel=="green"){
+            Bob=1;
+            Nefario=Minion[i][1]*scale;
+        }
+        if (channel=="red"){
+            Bob=2;
+            Nefario=Minion[i][2]*scale;
+        }
+        if (Nefario>255){
+            Nefario=255;
+        }
+        Nefario+=0.5f;
+        Minion[i][Bob]=static_cast<unsigned char>(Nefario);
+        Gru.getPixelDeep()->push_back(Minion[i]);
+    }
+    return (Gru);
 }
 
 Tga Manipulator::addChannel(Tga Uno, string channel, int amount) {
@@ -291,7 +317,14 @@ Tga Manipulator::addChannel(Tga Uno, string channel, int amount) {
 }
 
 Tga Manipulator::flip(Tga Uno) {
-
+    Tga Sumo;
+    vector<vector<unsigned char>> Reverse = Uno.getPixelShallow();
+    Sumo.setHeader(Uno.getHeader());
+    Sumo.setPixelCount(Uno.getPixelCount());
+    for(int i=Sumo.getPixelCount();i>=0;i--){
+        Sumo.getPixelDeep()->push_back(Reverse[i]);
+    }
+    return (Sumo);
 }
 
 Tga Manipulator::singleChannel(Tga Uno, string channel) {
