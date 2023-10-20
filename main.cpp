@@ -38,7 +38,7 @@ int main(int arg, char* argv[]) {
     //quatro
     Tga vier1 = Manning.multiply(layer2,circles);
     Tga vier2 = Manning.subtract(vier1,pattern2);
-    drei2.writeTga("./output/part4.tga");
+    vier2.writeTga("./output/part4.tga");
 
     //cinco
     Tga funf = Manning.overlay(layer1,pattern1);
